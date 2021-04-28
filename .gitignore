@@ -1,0 +1,9 @@
+# macOS
+.DS_Store
+
+# development
+/.idea
+/node_modules
+
+# production
+/build

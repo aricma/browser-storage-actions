@@ -1,0 +1,1 @@
+export createLocalStorageActions from './localStorage';
