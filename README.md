@@ -1,7 +1,7 @@
 # browser storage actions
 *this is a typescript project*
 
-A functional approach to create common actions for all your browser storage options.
+A functional approach to createing common actions for all your browser storage options.
 Using the browser storage options is always a pain. Let's make this as easy and secure as we can.
 
 
