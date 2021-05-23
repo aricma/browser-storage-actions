@@ -1,6 +1,11 @@
 # browser storage actions
 *this is a typescript project*
 
+[![lint](https://github.com/aricma/browser-storage-actions/actions/workflows/lint.yml/badge.svg)](https://github.com/aricma/browser-storage-actions/actions/workflows/lint.yml)
+[![compile](https://github.com/aricma/browser-storage-actions/actions/workflows/compile.yml/badge.svg)](https://github.com/aricma/browser-storage-actions/actions/workflows/compile.yml)
+[![test](https://github.com/aricma/browser-storage-actions/actions/workflows/test.yml/badge.svg)](https://github.com/aricma/browser-storage-actions/actions/workflows/test.yml)
+[![coverage](https://github.com/aricma/browser-storage-actions/actions/workflows/coverage.yml/badge.svg)](https://github.com/aricma/browser-storage-actions/actions/workflows/coverage.yml)
+
 A functional approach to createing common actions for all your browser storage options.
 Using the browser storage options is always a pain. Let's make this as easy and secure as we can.
 
