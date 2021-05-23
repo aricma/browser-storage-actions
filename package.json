@@ -13,8 +13,7 @@
         "lint": "eslint src --ext .js,.ts",
         "compile": "tsc --noEmit",
         "build": "tsc",
-        "prepare": "yarn build",
-        "publish": "npm publish"
+        "prepare": "yarn build"
     },
     "devDependencies": {
         "@aricma/eslint-config": "^1.0.2",
@@ -46,9 +45,9 @@
         "typescript"
     ],
     "author": "aricma",
-    "license": "MIT",
     "bugs": {
         "url": "https://github.com/aricma/browser-storage-actions/issues"
     },
-    "homepage": "https://github.com/aricma/browser-storage-actions#readme"
+    "homepage": "https://github.com/aricma/browser-storage-actions#readme",
+    "license": "MIT"
 }

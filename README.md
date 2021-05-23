@@ -6,7 +6,7 @@
 [![test](https://github.com/aricma/browser-storage-actions/actions/workflows/test.yml/badge.svg)](https://github.com/aricma/browser-storage-actions/actions/workflows/test.yml)
 [![coverage](https://github.com/aricma/browser-storage-actions/actions/workflows/coverage.yml/badge.svg)](https://github.com/aricma/browser-storage-actions/actions/workflows/coverage.yml)
 
-A functional approach to createing common actions for all your browser storage options.
+A functional approach to creating common actions for all your browser storage options.
 Using the browser storage options is always a pain. Let's make this as easy and secure as we can.
 
 
@@ -23,13 +23,14 @@ Using the browser storage options is always a pain. Let's make this as easy and 
 ```bash
 yarn add @aricma/browser-storage-actions
 ```
-and
+or
 ```bash
 npm install @aricma/browser-storage-actions
 ```
 
 
 ## usage
+
 ```typescript
 import { createLocalStorageActions } from '@aricma/browser-storage-actions';
 
@@ -55,25 +56,40 @@ const item: SomeFeatureState = localStorageActions.addItem<SomeFeatureState>({
 ```
 
 
-## LocalStorageActions
+## domain models
+
+```typescript
+export interface BrowserStorageActions {
+    hasItem: (name: string) => boolean,
+    addItem: <Value>(item: BrowserStorageItem<Value>) => BrowserStorageItem<Value>,
+    getItemByName: <Value>(name: string) => BrowserStorageItem<Value>,
+    getAllItemsForNameSpace: () => Array<BrowserStorageItem<any>>,
+    updateItem: <Value>(item: BrowserStorageItem<Value>) => BrowserStorageItem<Value>,
+    removeItemByName: (name: string) => void,
+    removeAllItemsForNameSpace: () => void,
+}
+
+export interface BrowserStorageItem<Value = string> {
+    name: string,
+    value: Value,
+}
+```
+
+
+## createLocalStorageActions
 
 ```typescript
 interface createLocalStorageActions {
-    (depenedncies: LocalStorageActionsDependencies): LocalStorageActions
+    (depenedncies: LocalStorageActionsDependencies): BrowserStorageActions
 }
 
 interface LocalStorageActionsDependencies {
     nameSpace: string,
     localStorage: BrowserLocalStorage
 }
-
-export interface LocalStorageActions {
-    hasItem: (name: string) => boolean,
-    addItem: <Value>(item: LocalStorageItem<Value>) => LocalStorageItem<Value>,
-    getItemByName: <Value>(name: string) => LocalStorageItem<Value>,
-    getAllItemsForNameSpace: () => Array<LocalStorageItem<any>>,
-    updateItem: <Value>(item: LocalStorageItem<Value>) => LocalStorageItem<Value>,
-    removeItemByName: (name: string) => void,
-    removeAllItemsForNameSpace: () => void,
-}
 ```
+
+
+## Feedback
+
+- [https://github.com/aricma/browser-storage-actions/issues](https://github.com/aricma/browser-storage-actions/issues)
