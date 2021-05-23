@@ -2,8 +2,10 @@
 # yarn lockfile v1
 
 
-"@aricma/eslint-config@file:../eslint-config":
-  version "1.0.1"
+"@aricma/eslint-config@^1.0.2":
+  version "1.0.2"
+  resolved "https://registry.yarnpkg.com/@aricma/eslint-config/-/eslint-config-1.0.2.tgz#55744ef22450e5bec01f2cb20dd67db71500f78a"
+  integrity sha512-ZdtLwJIBkCVGsxGGHVmSFGPfQxR0hAH8TSC+ssBSWaBoIxQh+nJcMQberYWWIG3HMrmsxjvJ2u/1DDY6zKWyBg==
 
 "@babel/code-frame@7.12.11":
   version "7.12.11"

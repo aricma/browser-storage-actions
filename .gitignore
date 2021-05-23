@@ -1,9 +1,10 @@
-# macOS
-.DS_Store
-
 # development
 /.idea
 /node_modules
+/coverage
 
 # production
 /build
+
+# misc
+.DS_Store
