@@ -1,19 +1,13 @@
 import {
-    LocalStorageItem,
-    LocalStorageActions,
     LocalStorageActionErrors,
-} from './models';
+} from './localStorageActions.models';
 import createLocalStorageActions from './localStorageActions';
+import {BrowserStorageActionsModels} from '../models/domain';
 
 
 const NAME_SPACE = 'name_space';
 
-function setupLocalStorageTestActions(): LocalStorageActions {
-    return createLocalStorageActions({
-        nameSpace: NAME_SPACE,
-        localStorage: localStorage,
-    });
-}
+const testActions = setupLocalStorageTestActions();
 
 beforeEach(function setup() {
     localStorage.clear();
@@ -24,7 +18,7 @@ beforeEach(function setup() {
     localStorage.setItem(NAME_SPACE + '__object', JSON.stringify({ name: 'object', value: { a: '1', b: '2', c: '3' } }));
 });
 
-describe('hasItem', () => {
+describe(testActions.hasItem.name, () => {
 
     test('given name: string, when called and successful, then returns true', () => {
         const { hasItem } = setupLocalStorageTestActions();
@@ -38,38 +32,38 @@ describe('hasItem', () => {
 
 });
 
-describe('addItem', () => {
+describe(testActions.addItem.name, () => {
 
     test('given item: Item<string>, when successful, then returns item', () => {
-        const item: LocalStorageItem = { name: 'a', value: 'a' };
+        const item: BrowserStorageActionsModels.BrowserStorageItem = { name: 'a', value: 'a' };
         const { addItem } = setupLocalStorageTestActions();
         expect(addItem(item)).toBe(item);
         expect(localStorage.getItem(NAME_SPACE + '__' + item.name)).toBe(JSON.stringify(item));
     });
 
     test('given item: Item<boolean>, when successful, then returns item', () => {
-        const item: LocalStorageItem<boolean> = { name: 'a', value: true };
+        const item: BrowserStorageActionsModels.BrowserStorageItem<boolean> = { name: 'a', value: true };
         const { addItem } = setupLocalStorageTestActions();
         expect(addItem(item)).toBe(item);
         expect(localStorage.getItem(NAME_SPACE + '__' + item.name)).toBe(JSON.stringify(item));
     });
 
     test('given item: Item<Array<string>>, when successful, then returns item', () => {
-        const item: LocalStorageItem<Array<string>> = { name: 'a', value: ['a', 'b', 'c'] };
+        const item: BrowserStorageActionsModels.BrowserStorageItem<Array<string>> = { name: 'a', value: ['a', 'b', 'c'] };
         const { addItem } = setupLocalStorageTestActions();
         expect(addItem(item)).toBe(item);
         expect(localStorage.getItem(NAME_SPACE + '__' + item.name)).toBe(JSON.stringify(item));
     });
 
     test('given item: Item<object>, when successful, then returns item', () => {
-        const item: LocalStorageItem<{ some: 'interface' }> = { name: 'a', value: { some: 'interface' } };
+        const item: BrowserStorageActionsModels.BrowserStorageItem<{ some: 'interface' }> = { name: 'a', value: { some: 'interface' } };
         const { addItem } = setupLocalStorageTestActions();
         expect(addItem(item)).toBe(item);
         expect(localStorage.getItem(NAME_SPACE + '__' + item.name)).toBe(JSON.stringify(item));
     });
 
     test('given item: Item to be added twice, when called second time, then throws', () => {
-        const item: LocalStorageItem = { name: 'number', value: '456' };
+        const item: BrowserStorageActionsModels.BrowserStorageItem = { name: 'number', value: '456' };
         const { addItem } = setupLocalStorageTestActions();
         expect(() => addItem(item)).toThrow(Error(LocalStorageActionErrors.ITEM_NOT_ADDABLE_CONFLICTING_ITEM_NAME));
         const expected = [
@@ -84,11 +78,11 @@ describe('addItem', () => {
 
 });
 
-describe('updateItem', () => {
+describe(testActions.updateItem.name, () => {
 
     test('given item: Item when successful, then return item: Item', () => {
         const { updateItem } = setupLocalStorageTestActions();
-        const item: LocalStorageItem<number> = { name: 'number', value: 456 };
+        const item: BrowserStorageActionsModels.BrowserStorageItem<number> = { name: 'number', value: 456 };
         expect(updateItem(item)).toEqual(item);
         expect(localStorage.getItem(NAME_SPACE + '__number'))
             .toBe(JSON.stringify(item));
@@ -96,7 +90,7 @@ describe('updateItem', () => {
 
     test('given invalid item name when failed, then throws', () => {
         const { updateItem } = setupLocalStorageTestActions();
-        const item: LocalStorageItem<number> = { name: 'other', value: 456 };
+        const item: BrowserStorageActionsModels.BrowserStorageItem<number> = { name: 'other', value: 456 };
         expect(() => updateItem(item)).toThrow(Error(LocalStorageActionErrors.ITEM_NOT_FOUND));
         const expected = [
             NAME_SPACE + '__string',
@@ -110,7 +104,7 @@ describe('updateItem', () => {
 
 });
 
-describe('getItemByName', () => {
+describe(testActions.getItemByName.name, () => {
 
     test('when given name: string, when called, then return value: any', () => {
         const name = 'array';
@@ -126,7 +120,7 @@ describe('getItemByName', () => {
 
 });
 
-describe('getAllItemsForNameSpace', () => {
+describe(testActions.getAllItemsForNameSpace.name, () => {
 
     test('when called, then return all Array[Item] for nameSpace', () => {
         const OTHER_NAME_SPACE = 'other_name_space';
@@ -157,7 +151,7 @@ describe('getAllItemsForNameSpace', () => {
 
 });
 
-describe('removeItemByName', () => {
+describe(testActions.removeItemByName.name, () => {
 
     test('given valid name, when successful, then return name: string', () => {
         const { removeItemByName } = setupLocalStorageTestActions();
@@ -179,7 +173,7 @@ describe('removeItemByName', () => {
 
 });
 
-describe('removeAllItemsForNameSpace', () => {
+describe(testActions.removeAllItemsForNameSpace.name, () => {
 
     const OTHER_NAME_SPACE = 'other_name_space';
 
@@ -193,5 +187,11 @@ describe('removeAllItemsForNameSpace', () => {
         expect(Object.keys(localStorage)).toEqual([OTHER_NAME_SPACE + '__string']);
     });
 
-
 });
+
+function setupLocalStorageTestActions(): BrowserStorageActionsModels.BrowserStorageActions {
+    return createLocalStorageActions({
+        nameSpace: NAME_SPACE,
+        localStorage: localStorage,
+    });
+}

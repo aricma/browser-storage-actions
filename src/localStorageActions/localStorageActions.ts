@@ -1,10 +1,5 @@
-import {
-    LocalStorageActions,
-    BrowserLocalStorage,
-    LocalStorageItem,
-    LocalStorageActionErrors,
-    AddItem, GetItemByName, UpdateItem, RemoveItemByName, RemoveAllItemsForNameSpace, GetAllItemsForNameSpace, HasItem,
-} from './models';
+import {BrowserStorageActionsModels} from '../models/domain';
+import {BrowserLocalStorage, LocalStorageActionErrors} from './localStorageActions.models';
 
 
 interface LocalStorageActionsDependencies {
@@ -12,7 +7,7 @@ interface LocalStorageActionsDependencies {
     localStorage: BrowserLocalStorage
 }
 
-export default function createLocalStorageActions(dependencies: LocalStorageActionsDependencies): LocalStorageActions {
+export default function createLocalStorageActions(dependencies: LocalStorageActionsDependencies): BrowserStorageActionsModels.BrowserStorageActions {
 
     function checkLocalStorageKeyForNameSpace(localStorageKey: string): boolean {
         return localStorageKey.slice(0, dependencies.nameSpace.length) === dependencies.nameSpace;
@@ -27,19 +22,19 @@ export default function createLocalStorageActions(dependencies: LocalStorageActi
         return Object.keys(dependencies.localStorage).includes(key);
     }
 
-    function tryToParseRawValue<Value>(rawValue: string): LocalStorageItem<Value> {
+    function tryToParseRawValue<Value>(rawValue: string): BrowserStorageActionsModels.BrowserStorageItem<Value> {
         try {
-            return JSON.parse(rawValue) as LocalStorageItem<Value>;
-        } catch(e) {
+            return JSON.parse(rawValue) as BrowserStorageActionsModels.BrowserStorageItem<Value>;
+        } catch (e) {
             throw new Error(LocalStorageActionErrors.FAILED_TO_PARSE);
         }
     }
 
-    const hasItem: HasItem = (name) => {
+    const hasItem: BrowserStorageActionsModels.HasItem = (name) => {
         return checkLocalStorageForName(name);
     };
 
-    const addItem: AddItem = (item) => {
+    const addItem: BrowserStorageActionsModels.AddItem = (item) => {
         if (checkLocalStorageForName(item.name)) {
             throw new Error(LocalStorageActionErrors.ITEM_NOT_ADDABLE_CONFLICTING_ITEM_NAME);
         }
@@ -49,7 +44,7 @@ export default function createLocalStorageActions(dependencies: LocalStorageActi
         return item;
     };
 
-    const getItemByName: GetItemByName = <Value>(name: string) => {
+    const getItemByName: BrowserStorageActionsModels.GetItemByName = <Value>(name: string) => {
         if (checkLocalStorageForName(name)) {
             const key = keyForName(name);
             const rawValue: string = dependencies.localStorage.getItem(key);
@@ -59,7 +54,7 @@ export default function createLocalStorageActions(dependencies: LocalStorageActi
         }
     };
 
-    const getAllItemsForNameSpace: GetAllItemsForNameSpace = () => {
+    const getAllItemsForNameSpace: BrowserStorageActionsModels.GetAllItemsForNameSpace = () => {
         return Object
             .entries(dependencies.localStorage)
             .filter(([key, _]) => checkLocalStorageKeyForNameSpace(key))
@@ -68,10 +63,10 @@ export default function createLocalStorageActions(dependencies: LocalStorageActi
                     ...allItems,
                     tryToParseRawValue(rawValue),
                 ];
-            }, [] as Array<LocalStorageItem<any>>);
+            }, [] as Array<BrowserStorageActionsModels.BrowserStorageItem<any>>);
     };
 
-    const updateItem: UpdateItem = (item) => {
+    const updateItem: BrowserStorageActionsModels.UpdateItem = (item) => {
         if (checkLocalStorageForName(item.name)) {
             const key = keyForName(item.name);
             const value = JSON.stringify(item);
@@ -82,7 +77,7 @@ export default function createLocalStorageActions(dependencies: LocalStorageActi
         }
     };
 
-    const removeItemByName: RemoveItemByName = (name: string) => {
+    const removeItemByName: BrowserStorageActionsModels.RemoveItemByName = (name: string) => {
         if (checkLocalStorageForName(name)) {
             const key = keyForName(name);
             dependencies.localStorage.removeItem(key);
@@ -91,7 +86,7 @@ export default function createLocalStorageActions(dependencies: LocalStorageActi
         }
     };
 
-    const removeAllItemsForNameSpace: RemoveAllItemsForNameSpace = () => {
+    const removeAllItemsForNameSpace: BrowserStorageActionsModels.RemoveAllItemsForNameSpace = () => {
         Object
             .keys(dependencies.localStorage)
             .filter((key) => checkLocalStorageKeyForNameSpace(key))
