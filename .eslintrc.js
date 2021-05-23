@@ -19,4 +19,7 @@ module.exports = {
         'jest',
         '@typescript-eslint',
     ],
+    rules: {
+        'jest/valid-title': ['warn', { ignoreTypeOfDescribeName: true }],
+    },
 };
