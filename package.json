@@ -1,6 +1,6 @@
 {
     "name": "@aricma/browser-storage-actions",
-    "version": "1.0.0",
+    "version": "1.0.1",
     "description": "A functional approach to create common actions for all your browser storages.",
     "main": "build/index.js",
     "types": "build/index.d.ts",
