@@ -37,7 +37,7 @@ export default function createLocalStorageActions(dependencies: LocalStorageActi
 
     const hasItem: HasItem = (name) => {
         return checkLocalStorageForName(name);
-    }
+    };
 
     const addItem: AddItem = (item) => {
         if (checkLocalStorageForName(item.name)) {
@@ -47,7 +47,7 @@ export default function createLocalStorageActions(dependencies: LocalStorageActi
         const value = JSON.stringify(item);
         dependencies.localStorage.setItem(key, value);
         return item;
-    }
+    };
 
     const getItemByName: GetItemByName = <Value>(name: string) => {
         if (checkLocalStorageForName(name)) {
@@ -57,7 +57,7 @@ export default function createLocalStorageActions(dependencies: LocalStorageActi
         } else {
             throw new Error(LocalStorageActionErrors.ITEM_NOT_FOUND);
         }
-    }
+    };
 
     const getAllItemsForNameSpace: GetAllItemsForNameSpace = () => {
         return Object
@@ -69,7 +69,7 @@ export default function createLocalStorageActions(dependencies: LocalStorageActi
                     tryToParseRawValue(rawValue),
                 ];
             }, [] as Array<LocalStorageItem<any>>);
-    }
+    };
 
     const updateItem: UpdateItem = (item) => {
         if (checkLocalStorageForName(item.name)) {
@@ -80,7 +80,7 @@ export default function createLocalStorageActions(dependencies: LocalStorageActi
         } else {
             throw new Error(LocalStorageActionErrors.ITEM_NOT_FOUND);
         }
-    }
+    };
 
     const removeItemByName: RemoveItemByName = (name: string) => {
         if (checkLocalStorageForName(name)) {
@@ -89,7 +89,7 @@ export default function createLocalStorageActions(dependencies: LocalStorageActi
         } else {
             throw new Error(LocalStorageActionErrors.ITEM_NOT_REMOVABLE);
         }
-    }
+    };
 
     const removeAllItemsForNameSpace: RemoveAllItemsForNameSpace = () => {
         Object
@@ -98,7 +98,7 @@ export default function createLocalStorageActions(dependencies: LocalStorageActi
             .forEach((key) => {
                 dependencies.localStorage.removeItem(key);
             });
-    }
+    };
 
     return {
         hasItem: hasItem,

@@ -1,7 +1,7 @@
 import {
     LocalStorageItem,
     LocalStorageActions,
-    LocalStorageActionErrors
+    LocalStorageActionErrors,
 } from './models';
 import createLocalStorageActions from './localStorageActions';
 
