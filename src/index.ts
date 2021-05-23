@@ -1,1 +1,5 @@
-export createLocalStorageActions from './localStorage';
+import createLocalStorageActions from './localStorageActions';
+
+export {
+    createLocalStorageActions,
+};
